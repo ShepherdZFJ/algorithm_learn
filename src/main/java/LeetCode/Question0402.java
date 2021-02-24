@@ -16,17 +16,18 @@ public class Question0402 {
 
 
 
+    TreeNode topRoot = null;
     Map<TreeNode, Integer> map = new HashMap();
     public TreeNode sortedArrayToBST(int[] nums) {
-        TreeNode root = null;
+
         TreeNode temp = null;
         for (int i = 0; i < nums.length ; i++) {
-            temp = insertAVL(temp, nums[i], root);
+            temp = insertAVL(temp, nums[i]);
             if(i == 0){
-                root = temp;
+                topRoot = temp;
             }
         }
-        return root;
+        return topRoot;
 
     }
 
@@ -34,7 +35,7 @@ public class Question0402 {
     TreeNode insert(TreeNode root, int x) {
         if (root == null) {
             root = new TreeNode(x);
-            map.put(root, 0);
+            map.put(root, 1);
             return root;
         }
         if ( x == root.val) {
@@ -61,9 +62,7 @@ public class Question0402 {
         if (node == null) {
             return 0;
         }
-        int leftHeight = map.get(node) == null ? 0 : map.get(node);
-        int rightHeight = map.get(node) == null ? 0 : map.get(node);
-        return Math.max(leftHeight,rightHeight);
+        return map.get(node) == null ? 0 : map.get(node);
     }
 
     void updateHeight(TreeNode node) {
@@ -77,6 +76,7 @@ public class Question0402 {
         temp.left = root;
         updateHeight(root);
         updateHeight(temp);
+        root = temp;
     }
 
     // 右旋
@@ -86,41 +86,44 @@ public class Question0402 {
         temp.right = root;
         updateHeight(root);
         updateHeight(temp);
+        root = temp;
     }
 
-    TreeNode insertAVL(TreeNode root, int v, TreeNode allRoot) {
+    TreeNode insertAVL(TreeNode root, int v) {
         if (root == null) {
             root = new TreeNode(v);
             return root;
         }
         if (v < root.val) {
             root.left =  insert(root.left, v);
-            updateHeight(root);
-            updateHeight(allRoot);
-            if (getBalanceFactor(allRoot) == 2) {
-                if (getBalanceFactor(allRoot.left) == 1) {
+            updateHeight(topRoot.left);
+            updateHeight(topRoot);
+            if (getBalanceFactor(topRoot) == 2) {
+                if (getBalanceFactor(topRoot.left) == 1) {
                     // LL型，右旋
-                    R(allRoot);
-                } else if (getBalanceFactor(allRoot.left) == -1) {
+                    R(topRoot);
+                } else if (getBalanceFactor(topRoot.left) == -1) {
                     // LR型，先以root的左子树为整体进行进行左旋， 再对root右旋
-                    L(allRoot.left);
-                    R(allRoot);
+                    L(topRoot.left);
+                    R(topRoot);
                 }
+                topRoot = root;
             }
             return root.left;
         } else { //v大于当前结点root.val
             root.right = insert(root.right, v);
-            updateHeight(root);
-            updateHeight(allRoot);
-            if (getBalanceFactor(allRoot) == -2) {
-                if (getBalanceFactor(allRoot.right) == -1) {
+            updateHeight(topRoot.right);
+            updateHeight(topRoot);
+            if (getBalanceFactor(topRoot) == -2) {
+                if (getBalanceFactor(topRoot.right) == -1) {
                     // RR型，左旋
-                    L(allRoot);
-                } else if (getBalanceFactor(allRoot.right) == 1) {
+                    L(topRoot);
+                } else if (getBalanceFactor(topRoot.right) == 1) {
                     // RL型，先以root的右子树为整体进行右旋，再对root左旋
-                    R(allRoot.right);
-                    L(allRoot);
+                    R(topRoot.right);
+                    L(topRoot);
                 }
+                topRoot = root;
             }
             return root.right;
         }
