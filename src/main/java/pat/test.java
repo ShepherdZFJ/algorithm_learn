@@ -7,9 +7,11 @@ package pat;
  */
 public class test {
     public static void main(String[] args) {
-        String str = "helloworldhello111";
-        str = str.replace("hello", "");
-        System.out.println(str);
+//        String str = "helloworldhello111";
+//        str = str.replace("hello", "");
+//        System.out.println(str);
 
     }
+
+
 }
