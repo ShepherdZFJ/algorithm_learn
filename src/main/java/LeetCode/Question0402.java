@@ -2,10 +2,10 @@ package LeetCode;
 
 
 
-import java.util.HashMap;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author fjZheng
@@ -17,7 +17,6 @@ public class Question0402 {
 
 
     TreeNode topRoot = null;
-    Map<TreeNode, Integer> map = new HashMap();
     public TreeNode sortedArrayToBST(int[] nums) {
 
         TreeNode temp = null;
@@ -35,7 +34,6 @@ public class Question0402 {
     TreeNode insert(TreeNode root, int x) {
         if (root == null) {
             root = new TreeNode(x);
-            map.put(root, 1);
             return root;
         }
         if ( x == root.val) {
@@ -58,25 +56,25 @@ public class Question0402 {
 
     }
 
+
     int getHeight(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-        return map.get(node) == null ? 0 : map.get(node);
+            if (node == null) {
+                return 0;
+            }
+            int leftHeight = getHeight(node.left);
+            int rightHeight = getHeight(node.right);
+            return leftHeight > rightHeight ? 1 + leftHeight : 1 + rightHeight;
+
     }
 
-    void updateHeight(TreeNode node) {
-        map.put(node, Math.max(getHeight(node.left), getHeight(node.right)) + 1);
-    }
+
 
     // 左旋
     void L(TreeNode root) {
         TreeNode temp = root.right;
         root.right = temp.left;
         temp.left = root;
-        updateHeight(root);
-        updateHeight(temp);
-        root = temp;
+        topRoot = temp;
     }
 
     // 右旋
@@ -84,9 +82,7 @@ public class Question0402 {
         TreeNode temp = root.left;
         root.left = temp.right;
         temp.right = root;
-        updateHeight(root);
-        updateHeight(temp);
-        root = temp;
+        topRoot = temp;
     }
 
     TreeNode insertAVL(TreeNode root, int v) {
@@ -94,36 +90,31 @@ public class Question0402 {
             root = new TreeNode(v);
             return root;
         }
-        if (v < root.val) {
+        if (v < topRoot.val) {
             root.left =  insert(root.left, v);
-            updateHeight(topRoot.left);
-            updateHeight(topRoot);
             if (getBalanceFactor(topRoot) == 2) {
-                if (getBalanceFactor(topRoot.left) == 1) {
+                if (getBalanceFactor(topRoot.left) == 1 || getBalanceFactor(topRoot.left) == 2) {
                     // LL型，右旋
                     R(topRoot);
-                } else if (getBalanceFactor(topRoot.left) == -1) {
+                } else if (getBalanceFactor(topRoot.left) == -1 || getBalanceFactor(topRoot.left) == -2) {
                     // LR型，先以root的左子树为整体进行进行左旋， 再对root右旋
                     L(topRoot.left);
                     R(topRoot);
                 }
-                topRoot = root;
             }
             return root.left;
         } else { //v大于当前结点root.val
             root.right = insert(root.right, v);
-            updateHeight(topRoot.right);
-            updateHeight(topRoot);
             if (getBalanceFactor(topRoot) == -2) {
-                if (getBalanceFactor(topRoot.right) == -1) {
+                if (getBalanceFactor(topRoot.right) == -1 || getBalanceFactor(topRoot.right) == -2) {
                     // RR型，左旋
                     L(topRoot);
-                } else if (getBalanceFactor(topRoot.right) == 1) {
+                } else if (getBalanceFactor(topRoot.right) == 1 || getBalanceFactor(topRoot.right) == 2) {
                     // RL型，先以root的右子树为整体进行右旋，再对root左旋
                     R(topRoot.right);
                     L(topRoot);
                 }
-                topRoot = root;
+
             }
             return root.right;
         }
@@ -147,7 +138,7 @@ public class Question0402 {
     }
 
     public static void main(String[] args) {
-        int[] nums = {-10,-3,0,9,5};
+        int[] nums = {1,2,3,4,5};
         Question0402 q = new Question0402();
         TreeNode root = q.sortedArrayToBST(nums);
         layerOrder(root);
