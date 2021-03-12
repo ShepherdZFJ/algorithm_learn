@@ -138,7 +138,7 @@ public class Question0402 {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1,2,3,4,5};
+        int[] nums = {0,1,2,3,4,5};
         Question0402 q = new Question0402();
         TreeNode root = q.sortedArrayToBST(nums);
         layerOrder(root);
