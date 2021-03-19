@@ -26,7 +26,7 @@ package LeetCode.dp;
 public class Offer14 {
     public static void main(String[] args) {
         Offer14 o = new Offer14();
-        int n = 6;
+        int n = 10;
         int maxValue = o.cuttingRope(n);
         System.out.println(maxValue);
     }
@@ -42,21 +42,17 @@ public class Offer14 {
     }
 
     void DFS(int[] a, int index, int sum, int n, int value) {
-        if (index >= a.length) {
+        if (index >= a.length || sum > n) {
             return;
         }
-        sum = sum + a[index];
-        if (sum > n) {
-            return;
-        }
-        value = value * a[index];
         if (sum == n) {
             if (value > max) {
                 max = value;
             }
             return ;
         }
-        DFS(a, index, sum, n, value);
+        DFS(a, index, sum+a[index], n, value*a[index]);
+
         DFS(a, index+1, sum, n, value);
     }
 
