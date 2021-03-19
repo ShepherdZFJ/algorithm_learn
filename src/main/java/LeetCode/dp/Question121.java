@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Question121 {
     public static void main(String[] args) {
-        int[] prices ={7,1,5,3,6,4};
+        int[] prices ={7,1,5,3};
         int max = maxProfit(prices);
         System.out.println(max);
     }
@@ -63,6 +63,25 @@ public class Question121 {
             }
         }
         return max;
+    }
 
+    //方法二：使用双指针
+    public int maxProfit1(int[] prices) {
+        if (prices.length <= 1) {
+            return 0;
+        }
+        int res = 0;
+        int left = 0;
+        int right = 1;
+        while (right < prices.length) {
+            if (prices[left] >= prices[right]) {
+                left = right;
+                right++;
+            }else {
+                res = Math.max(prices[right] - prices[left], res);
+                right++;
+            }
+        }
+        return res;
     }
 }
