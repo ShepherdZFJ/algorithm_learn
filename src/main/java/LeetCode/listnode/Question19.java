@@ -1,10 +1,12 @@
-package LeetCode;
+package LeetCode.listnode;
 
 /**
  * @author fjZheng
  * @version 1.0
  * @date 2021/2/20 15:03
  */
+
+import LeetCode.listnode.ListNode;
 
 /**
  * 题目描述：给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。

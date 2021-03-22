@@ -1,4 +1,4 @@
-package LeetCode;
+package LeetCode.listnode;
 
 /**
  * @author fjZheng

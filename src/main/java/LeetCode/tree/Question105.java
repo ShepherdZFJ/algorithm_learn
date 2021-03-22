@@ -1,10 +1,12 @@
-package LeetCode;
+package LeetCode.tree;
 
 /**
  * @author fjZheng
  * @version 1.0
  * @date 2021/2/22 15:28
  */
+
+import LeetCode.tree.TreeNode;
 
 /**
  * 题目描述：根据一棵树的前序遍历与中序遍历构造二叉树。

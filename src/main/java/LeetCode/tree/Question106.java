@@ -1,8 +1,9 @@
-package LeetCode;
+package LeetCode.tree;
+
+import LeetCode.tree.TreeNode;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * @author fjZheng
