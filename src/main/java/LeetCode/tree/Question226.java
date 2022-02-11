@@ -56,6 +56,21 @@ public class Question226 {
 
     }
 
+    //解法二：递归 将整棵树的节点翻转
+    TreeNode invertTree2(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+       // root 节点需要交换它的左右⼦节点
+        TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
+        // 让左右⼦节点继续翻转它们的⼦节点
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+
     static void layerOrder(TreeNode root) {
         List<TreeNode> list = new LinkedList<>();
         list.add(root);
