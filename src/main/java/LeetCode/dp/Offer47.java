@@ -32,6 +32,12 @@ public class Offer47 {
     }
 
     //解法一：动态规划
+
+    /**
+     * 解题思路：以dp[i][j]表示以grip[i][j]结尾的最大和
+     * @param grid
+     * @return
+     */
     public int maxValueDp(int[][] grid) {
         int[][] dp = new int[200][200];
         for (int i = 0; i < grid.length; i++) {
