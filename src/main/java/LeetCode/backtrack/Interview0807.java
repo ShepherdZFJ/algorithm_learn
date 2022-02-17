@@ -49,17 +49,27 @@ public class Interview0807 {
         return ans;
     }
 
+    /**
+     * 解题思路：回溯算法：对给定的字符串的所有字母进行排列组合
+     * @param chars
+     * @param track
+     * @param length
+     */
     void backtrack(char[] chars, LinkedList<Character> track, int length) {
         if (track.size() == length) {
             res.add(new LinkedList<>(track));
             return;
         }
         for (int i = 0; i < chars.length; i++) {
+            // 已经包含当前字母，则跳过
             if (track.contains(chars[i])) {
                continue;
             }
+            // 选取位置i的字母
             track.add(chars[i]);
+            // 递归组合其他字母，如果和当前字母相同，贼会被判断条件跳过
             backtrack(chars, track, length);
+            // 移除前面选取位置i的字母
             track.removeLast();
         }
     }

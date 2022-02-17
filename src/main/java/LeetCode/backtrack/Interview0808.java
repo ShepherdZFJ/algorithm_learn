@@ -54,6 +54,14 @@ public class Interview0808 {
         return ans.toArray(new String[0]);
     }
 
+    /**
+     * 解题思路和{@link Interview0807}差不多，唯一就是Interview0807的字符串字母不重复，这里的字符串字母可以重读
+     * 前面是遍历字符串所有字母，保存在track集合中返回，同时会根据track中是否包含字母char[i]来解决已经选取的问题
+     * 而这里我们记录已经选取的位置即可，根据位置是否已经在集合中来解决重复选取的问题
+     * @param chars
+     * @param track
+     * @param index
+     */
     void backtrack(char[] chars, LinkedList<Character> track, LinkedList<Integer> index) {
         if (track.size() == chars.length) {
             res.add(new LinkedList<>(track));
