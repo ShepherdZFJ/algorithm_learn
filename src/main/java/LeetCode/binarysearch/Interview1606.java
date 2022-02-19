@@ -26,7 +26,7 @@ public class Interview1606 {
         Interview1606 interview1606 = new Interview1606();
         int[] a = {-2147483648, 1};
         int[] b = {2147483647, 0};
-        int ans = interview1606.smallestDifference(a, b);
+        int ans = interview1606.smallestDifference2(a, b);
         System.out.println(ans);
     }
 
@@ -60,5 +60,39 @@ public class Interview1606 {
         }
         return minValue;
 
+    }
+
+    /**
+     * 二分查找解决
+     * @param a
+     * @param b
+     * @return
+     */
+    public int smallestDifference2(int[] a, int[] b) {
+        Arrays.sort(a);
+        Arrays.sort(b);
+        int minValue = Integer.MAX_VALUE;
+        for (int i = 0; i < a.length; i++) {
+            int left = 0;
+            int right = b.length - 1;
+            while (left <= right) {
+                int mid = left + (right-left)/2;
+                int sub = a[i] - b[mid];
+                if (sub == 0) {
+                    return 0;
+                }
+                if (sub > 0) {
+                    left = mid + 1;
+                }
+                if (sub < 0) {
+                    right = mid - 1;
+                }
+                if ( Integer.MIN_VALUE < Math.abs(sub) && Math.abs(sub) < minValue ) {
+                    minValue = Math.abs(sub);
+                }
+            }
+
+        }
+        return minValue;
     }
 }
