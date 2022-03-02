@@ -6,6 +6,8 @@ package LeetCode.dp;
  * @date 2022/2/27 23:07
  */
 
+import java.util.Arrays;
+
 /**
  * 题目描述：你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，
  * 如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
@@ -66,5 +68,22 @@ public class Question198 {
             }
         }
         return max;
+    }
+
+    private int[] memo;
+    public int rob2(int[] nums) {
+        memo = new int[nums.length];
+        Arrays.fill(memo, -1);
+        return dp(nums, 0);
+    }
+    private int dp(int[] nums, int start) {
+        if (start >= nums.length) {
+            return 0;
+        }
+        if (memo[start] != -1) return memo[start];
+        int res = Math.max(dp(nums, start + 1),
+                nums[start] + dp(nums, start + 2));
+        memo[start] = res;
+        return res;
     }
 }
