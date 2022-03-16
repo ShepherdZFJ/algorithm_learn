@@ -34,8 +34,8 @@ package LeetCode.dp;
 public class Question714 {
     public static void main(String[] args) {
         Question714 question714 = new Question714();
-        int[] prices = {1,3,2,8,4,9};
-        int max = question714.maxProfit(prices, 2);
+        int[] prices = {1,3,7,5,10,3};
+        int max = question714.maxProfit(prices, 3);
         System.out.println(max);
     }
 
@@ -45,7 +45,7 @@ public class Question714 {
      * @param fee
      * @return
      */
-    public int maxProfit(int[] prices, int fee) {
+    public int maxProfit1(int[] prices, int fee) {
         int length = prices.length;
         if (length == 1) {
             return 0;
@@ -62,4 +62,35 @@ public class Question714 {
         }
         return dp[length-1][0]; //最后返回最后一天不持有股票最大收益，不持有股票肯定比持有股票收益高
     }
+
+    /**
+     * 贪心算法
+     * @param prices
+     * @param fee
+     * @return
+     */
+    public int maxProfit(int[] prices, int fee) {
+        int n = prices.length;
+        // 初始化购买花费费用 这里等于价格+手续费，因为你肯定要交易的嘛，手续费本来就是花费的一部分
+        int buy = prices[0] + fee;
+        // 初始化收益
+        int profit = 0;
+        for (int i = 1; i < n; ++i) {
+            // 如果第i购买花费小于buy， 那就选择第i天购买
+            if (prices[i] + fee < buy) {
+                buy = prices[i] + fee;
+            } else if (prices[i] > buy) {
+                // 第i天大于buy，说明有收益了，但是有可能这个选择不是最优的，
+                // 有可能下一天会持续增长收益，那今天卖出就不是一个合适选择了，因此我们可以提供一个反悔操作，
+                // 看成当前手上拥有一支买入价格为prices[i]的股票，将buy更新为prices[i]
+                // 这样一来，如果下一天股票价格继续上升，我们会获得 prices[i+1]−prices[i] 的收益，
+                // 加上这一天prices[i]−buy 的收益，恰好就等于在这一天不进行任何操作，而在下一天卖出股票的收益
+                profit += prices[i] - buy;
+                buy = prices[i];
+            }
+        }
+        return profit;
+    }
+
+
 }
