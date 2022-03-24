@@ -32,7 +32,7 @@ public class Question102 {
         Question102 question102 = new Question102();
         TreeNode root = new TreeNode(3, new TreeNode(9, null, null),
                 new TreeNode(20, new TreeNode(15, null, null), new TreeNode(7, null, null)));
-        List<List<Integer>> lists = question102.levelOrder(root);
+        List<List<Integer>> lists = question102.levelOrder1(root);
         System.out.println(lists);
     }
 
@@ -58,6 +58,7 @@ public class Question102 {
             TreeNode node = list.get(0);
             list.remove(0);
             Integer height = map.get(node);
+            // 判断当前结果集result是否超过当前节点的高度，超过了只需要获取当前高度的子集追加node即可，没超过，就得新增当前层高子集
             if (result.size() <= height) {
                 List<Integer> values = new ArrayList<>();
                 values.add(node.val);
@@ -75,5 +76,34 @@ public class Question102 {
             }
         }
         return result;
+    }
+
+    // 优质解法
+    public List<List<Integer>> levelOrder1(TreeNode root) {
+        List<List<Integer>> res = new LinkedList<>();
+        if (root == null) {
+            return res;
+        }
+        // 队列
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        // while 循环控制从上向下⼀层层遍历
+        while (!q.isEmpty()) {
+            // 队列大小 这里的size其实就是同一层的数量
+            int sz = q.size();
+            // 记录这一层的节点值
+            List<Integer> level = new LinkedList<>();
+            // 控制每一层从左到右遍历
+            for (int i = 0; i < sz; i++) {
+                TreeNode cur = q.poll();
+                level.add(cur.val);
+                if (cur.left != null)
+                    q.offer(cur.left);
+                if (cur.right != null)
+                    q.offer(cur.right);
+            }
+            res.add(level);
+        }
+        return res;
     }
 }

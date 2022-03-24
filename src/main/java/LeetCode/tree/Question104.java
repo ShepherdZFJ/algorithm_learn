@@ -37,7 +37,7 @@ public class Question104 {
 
 
     /**
-     * 解题思路：层序遍历，记录遍历的层高即可
+     * 解题思路：解法一：层序遍历，记录遍历的层高即可
      * @param root
      * @return
      */
@@ -66,6 +66,44 @@ public class Question104 {
         }
         return res;
     }
+
+    /****  使用回溯算法解  ****/
+    int res = 0;
+    int depth = 0;
+    public int maxDepth1(TreeNode root) {
+       traverse(root);
+       return res;
+    }
+
+    // 先序遍历二叉树
+    void traverse(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        // 先加上深度
+        depth++;
+        // 记录最大深度
+        res = Math.max(res, depth);
+        traverse(root.left);
+        traverse(root.right);
+        // 递归回到之前节点，回溯，所以减去之前加的深度
+        depth--;
+    }
+
+    /**** 使用动态规划解答   *****/
+    // 返回当前节点的最大深度
+    public int maxDepth2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftMax = maxDepth2(root.left);
+        int rightMax = maxDepth2(root.right);
+        return 1 + Math.max(leftMax, rightMax);
+    }
+
+
+
+
 
 
 }
