@@ -74,4 +74,32 @@ public class Question114 {
         preOrder(root.left);
         preOrder(root.right);
     }
+
+
+    /**
+     * 优质解法：以root为根拉平为链表
+     * @param root
+     */
+    public void flatten1(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        // 递归拉平左右子树
+        flatten1(root.left);
+        flatten1(root.right);
+        // 左右子树已经拉平
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        // 设置根节点root的左子树为null，右子树为拉平后左子树
+        root.left = null;
+        root.right = left;
+        TreeNode p = root;
+        // 遍历右子树
+        while (p.right != null) {
+            p = p.right;
+        }
+        // 把之前拉平的右子树赋值给刚刚遍历后的最后一个节点的右子树。
+        p.right = right;
+    }
+
 }
