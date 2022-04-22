@@ -153,4 +153,29 @@ public class SortExample {
         return left;
     }
 
+    /**
+     * 冒泡排序： 比较相邻的元素。如果第一个比第二个大，就交换他们两个。
+     *  对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。
+     *  针对所有的元素重复以上的步骤，除了最后一个。
+     *  持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较
+     * @param arr
+     */
+    static void bubbleSort(int[] arr) {
+        int length = arr.length;
+        boolean sorted = true;
+        for (int j = 0; j < length - 1; j++) { //循环次数  每完成一次  沉入底部一个数
+            sorted = true; //每一次开始  默认已经排好序
+            for (int i = 0; i < length - 1 - j; i++) { // 在未沉底的数据中找寻一个数沉底
+                if (arr[i] > arr[i + 1]) {
+                    int temp = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = temp;
+                    sorted = false; //还没有排好序
+                }
+            }
+            if (sorted) { //确实已经排好序了
+                break; //不再继续循环
+            }
+        }
+    }
 }

@@ -10,6 +10,19 @@ import java.util.List;
  * @version 1.0
  * @date 2021/2/22 16:09
  */
+
+/**
+ * 题目描述：给定两个整数数组 inorder 和 postorder ，其中 inorder 是二叉树的中序遍历， postorder 是同一棵树的后序遍历，
+ * 请你构造并返回这颗 二叉树 。
+ *
+ * 示例 1:
+ * 输入：inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
+ * 输出：[3,9,20,null,null,15,7]
+ *
+ * 示例 2:
+ * 输入：inorder = [-1], postorder = [-1]
+ * 输出：[-1]
+ */
 public class Question106 {
     public static void main(String[] args) {
         int[] postorder = {9,15,7,20,3};
@@ -55,6 +68,7 @@ public class Question106 {
         preOrder(root.right);
     }
 
+    // 层序遍历
     static void layerOrder(TreeNode root) {
         List<TreeNode> list = new LinkedList<>();
         list.add(root);

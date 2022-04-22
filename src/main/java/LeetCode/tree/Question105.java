@@ -52,7 +52,7 @@ public class Question105 {
         return root;
     }
 
-    //前序遍历二叉树
+    // 后序遍历二叉树
     static void postOrder(TreeNode root) {
         if (root == null) {
             return;
