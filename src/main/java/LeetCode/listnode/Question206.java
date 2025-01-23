@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class Question206 {
     public static void main(String[] args) {
-        ListNode list = new ListNode(2, new ListNode(1, new ListNode(9, new ListNode(4, new ListNode(5)))));
-        ListNode listNode = reverseList(list);
+        ListNode list = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+        ListNode listNode = reverseList1(list);
         while (listNode != null) {
             System.out.print(listNode.val + " ");
             listNode = listNode.next;
@@ -50,7 +50,7 @@ public class Question206 {
         return result;
     }
 
-    public ListNode reverseList1(ListNode head) {
+    public static ListNode reverseList1(ListNode head) {
         ListNode next = null;
         ListNode pre = null;
 

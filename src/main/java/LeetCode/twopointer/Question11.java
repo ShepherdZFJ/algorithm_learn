@@ -33,6 +33,7 @@ public class Question11 {
         int maxArea = question11.maxArea(height);
         System.out.println(maxArea);
     }
+
     public int maxArea(int[] height) {
         int left = 0;
         int right = height.length - 1;

@@ -25,11 +25,34 @@ package LeetCode.base;
 public class Question560 {
     public static void main(String[] args) {
         Question560 question560 = new Question560();
-        int[] nums = {1,2,3,-2};
-        int i = question560.subarraySum(nums, 3);
+        int[] nums = {1,-1, 0};
+        int i = question560.subarraySum(nums, 0);
         System.out.println(i);
     }
+
+
     public int subarraySum(int[] nums, int k) {
+        int ans = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if (nums[i] == k) {
+                ans++;
+            }
+            int sum = nums[i];
+            for (int j = i+1; j < nums.length; j++) {
+                sum = sum + nums[j];
+                if (sum == k) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+
+
+
+
+    // 前缀和
+    public int subarraySum1(int[] nums, int k) {
         int length = nums.length;
         int s[] = new int[length];
         // 当前位置的前缀和

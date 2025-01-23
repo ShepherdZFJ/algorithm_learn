@@ -25,6 +25,16 @@ import java.util.List;
  * 0 <= Node.val <= 9
  */
 public class Question234 {
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(2, new ListNode(1)))));
+        Question234 question234 = new Question234();
+        boolean b = question234.isPalindrome2(head);
+        System.out.println(b);
+    }
+
+
+
     public boolean isPalindrome(ListNode head) {
         List<Integer> values = new ArrayList<>();
         while(head != null) {
@@ -40,5 +50,61 @@ public class Question234 {
             }
         }
         return true;
+    }
+
+    // 2.解法二：对比正反链表
+    public boolean isPalindrome1(ListNode head) {
+        List<Integer> v = new ArrayList<>();
+        ListNode p = head;
+        while (p != null) {
+            v.add(p.val);
+            p = p.next;
+        }
+        ListNode pre = reverse(head);
+        int i = 0;
+        while (pre != null) {
+            if (pre.val != v.get(i)) {
+                return false;
+            }
+            i++;
+            pre = pre.next;
+        }
+        return true;
+    }
+
+    // 3.解法三：快慢指针找到链表重点，反转后半段对比
+    public boolean isPalindrome2(ListNode head) {
+        ListNode slow = head, fast=head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast != null) {
+            slow = slow.next;
+        }
+        ListNode pre = reverse(slow);
+        while (pre != null) {
+            if (head.val != pre.val) {
+                return false;
+            }
+            pre = pre.next;
+            head = head.next;
+        }
+        return true;
+
+    }
+
+    // 反转链表
+    public ListNode reverse(ListNode head) {
+        ListNode next;
+        ListNode pre = null;
+        while (head != null) {
+            //
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
     }
 }

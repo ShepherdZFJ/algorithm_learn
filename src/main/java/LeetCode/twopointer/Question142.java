@@ -11,6 +11,40 @@ package LeetCode.twopointer;
  */
 public class Question142 {
 
+    public static void main(String[] args) {
+
+    }
+
+    public ListNode detectCycle1(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            // 有环
+            if (fast == slow) {
+                break;
+            }
+        }
+
+        // 无环
+        if (fast == null || fast.next == null) {
+            return null;
+        }
+        slow = head;
+        while (fast != slow) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return fast;
+    }
+
+
+
+
+
+
+
+
     public ListNode detectCycle(ListNode head) {
         ListNode fast, slow;
         //初始快、慢指针都指向头节点head
